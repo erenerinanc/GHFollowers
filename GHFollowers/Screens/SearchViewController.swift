@@ -72,9 +72,9 @@ class SearchViewController: UIViewController {
         //MARK: -Configure CallToActionButton
         callToActionButton.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
         callToActionButton.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(-80)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(80)
             make.leading.equalTo(view.snp.leading).inset(50)
-            make.trailing.equalTo(view.snp.trailing).inset(-50)
+            make.trailing.equalTo(view.snp.trailing).inset(50)
             make.height.equalTo(50)
         }
     }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class GFEmptyStateView: UIView {
     let messageLabel = GFTitleLabel(textAlignment: .center, fontSize: 28)
@@ -13,7 +14,7 @@ class GFEmptyStateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        layoutUI()
     }
     
     required init?(coder: NSCoder) {
@@ -26,26 +27,26 @@ class GFEmptyStateView: UIView {
     }
     
     
-    private func configure() {
+    private func layoutUI() {
         addSubviews(messageLabel,logoImageView)
         
         messageLabel.numberOfLines  = 3
         messageLabel.textColor      = .secondaryLabel
         logoImageView.image         = Images.emptyStateLogo
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160),
-            messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            messageLabel.heightAnchor.constraint(equalToConstant: 200),
-            
-            logoImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.3),
-            logoImageView.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.3),
-            logoImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 170),
-            logoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 100)
+        messageLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self.snp.centerY).offset(-160)
+            make.leading.equalTo(self.snp.leading)
+            make.trailing.equalTo(self.snp.trailing).offset(-40)
+            make.height.equalTo(200)
+        }
         
-        ])
+        logoImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(self.snp.width).multipliedBy(1)
+            make.height.equalTo(self.snp.height).multipliedBy(0.8)
+            make.trailing.equalTo(self.snp.trailing).offset(170)
+            make.bottom.equalTo(self.snp.bottom).offset(100)
+        }
     }
 
 

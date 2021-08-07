@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 enum ItemInfoType {
     case repos,gists,followers,following
@@ -20,38 +21,39 @@ class GFItemInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        layoutUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
+    private func layoutUI() {
         addSubviews(symbolImageView, titleLabel, countLabel)
         
-        symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFill
         symbolImageView.tintColor = .label
         
-        NSLayoutConstraint.activate([
-            symbolImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            symbolImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            symbolImageView.heightAnchor.constraint(equalToConstant: 20),
-            symbolImageView.widthAnchor.constraint(equalToConstant: 20),
-            
-            titleLabel.centerYAnchor.constraint(equalTo: symbolImageView.centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: symbolImageView.trailingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 18),
-            
-            countLabel.topAnchor.constraint(equalTo: symbolImageView.bottomAnchor, constant: 4),
-            countLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            countLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            countLabel.heightAnchor.constraint(equalToConstant: 18)
+        symbolImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.snp.top)
+            make.leading.equalTo(self.snp.leading)
+            make.height.equalTo(20)
+            make.width.equalTo(20)
+        }
         
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(symbolImageView.snp.centerY)
+            make.leading.equalTo(symbolImageView.snp.trailing).offset(12)
+            make.trailing.equalTo(self.snp.trailing)
+            make.height.equalTo(18)
+        }
         
-        ])
+        countLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(symbolImageView.snp.bottom).offset(4)
+            make.leading.equalTo(self.snp.leading)
+            make.trailing.equalTo(self.snp.trailing)
+            make.height.equalTo(18)
+        }
       
     }
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 
 class GFDataLoadingViewController: UIViewController {
@@ -28,12 +29,10 @@ class GFDataLoadingViewController: UIViewController {
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
         containerView.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
-        ])
+        activityIndicator.snp.makeConstraints { (make) in
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.centerX.equalTo(containerView.snp.centerX)
+        }
         
         activityIndicator.startAnimating()
     }

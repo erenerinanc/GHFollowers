@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class GFAlertViewController: UIViewController {
     
@@ -35,54 +36,43 @@ class GFAlertViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubviews(containerView, titleLabel, messageLabel, actionButton)
-        configureContainerView()
-        configureTitleLabel()
-        configureActionButton()
-        configureMessageLabel()
+        layoutUI()
     }
     
-    func configureContainerView() {
-        NSLayoutConstraint.activate([
-            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            containerView.widthAnchor.constraint(equalToConstant: 280),
-            containerView.heightAnchor.constraint(equalToConstant: 220)
-        ])
-    }
-    
-    func configureTitleLabel() {
+    private func layoutUI() {
+        //MARK: -Configure ContainerView
+        containerView.snp.makeConstraints { (make) in
+            make.centerY.equalTo(view.snp.centerY)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(280)
+            make.height.equalTo(220)
+        }
+        //MARK: -Configure TitleLabel
         titleLabel.text = alertTitle ?? "Something went wrong"
-        
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: padding),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            titleLabel.heightAnchor.constraint(equalToConstant: 28)
-        ])
-    }
-    
-    func configureActionButton() {
-        actionButton.setTitle(buttonTitle ?? "Ok", for: .normal)
-        actionButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            actionButton.heightAnchor.constraint(equalToConstant: 44),
-            actionButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            actionButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -padding)
-        ])
-    }
-    
-    func configureMessageLabel() {
+        titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(containerView.snp.top).offset(padding)
+            make.leading.equalTo(containerView.snp.leading).offset(padding)
+            make.trailing.equalTo(containerView.snp.trailing).inset(padding)
+            make.height.equalTo(28)
+        }
+        //MARK: -Configure MessageLabel
         messageLabel.text           = alertMessage ?? "Unable to complete request"
         messageLabel.numberOfLines  = 4
-        
-        NSLayoutConstraint.activate([
-            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            messageLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            messageLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12)
-        ])
+        messageLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).inset(8)
+            make.leading.equalTo(containerView.snp.leading).offset(padding)
+            make.trailing.equalTo(containerView.snp.trailing).inset(padding)
+            make.bottom.equalTo(actionButton.snp.top).offset(12)
+        }
+        //MARK: -Configure ActionButton
+        actionButton.setTitle(buttonTitle ?? "Ok", for: .normal)
+        actionButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
+        actionButton.snp.makeConstraints { (make) in
+            make.height.equalTo(44)
+            make.leading.equalTo(containerView.snp.leading).offset(padding)
+            make.trailing.equalTo(containerView.snp.trailing).inset(padding)
+            make.bottom.equalTo(containerView.snp.bottom).inset(padding)
+        }
     }
     
     @objc func dismissVC() {

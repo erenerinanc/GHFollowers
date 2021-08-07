@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol UserInfoViewControllerDelegate: class {
     func didRequestFollowers(for username: String)
@@ -86,26 +87,31 @@ class UserInfoViewController: GFDataLoadingViewController {
             itemView.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(itemView)
             
-            NSLayoutConstraint.activate([
-            itemView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-            itemView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            ])
+            itemView.snp.makeConstraints { (make) in
+                make.leading.equalTo(contentView.snp.leading).inset(padding)
+                make.trailing.equalTo(contentView.snp.trailing).inset(padding)
+            }
         }
-
-        NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180),
-            
-            itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
-            itemViewOne.heightAnchor.constraint(equalToConstant: itemHeight),
-            
-            itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: padding),
-            itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
-            
-            dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
         
-        ])
+        headerView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top)
+            make.height.equalTo(180)
+        }
+        
+        itemViewOne.snp.makeConstraints { (make) in
+            make.top.equalTo(headerView.snp.bottom).offset(padding)
+            make.height.equalTo(itemHeight)
+        }
+        
+        itemViewTwo.snp.makeConstraints { (make) in
+            make.top.equalTo(itemViewOne.snp.bottom).offset(padding)
+            make.height.equalTo(itemHeight)
+        }
+        
+        dateLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(itemViewTwo.snp.bottom).offset(padding)
+            make.height.equalTo(18)
+        }
     }
     
     private func add(childVC: UIViewController, to containerView: UIView) {

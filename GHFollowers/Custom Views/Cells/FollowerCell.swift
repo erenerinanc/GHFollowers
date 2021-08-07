@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class FollowerCell: UICollectionViewCell {
     static let reuseID      = "FollowerCell"
@@ -34,18 +35,18 @@ class FollowerCell: UICollectionViewCell {
         addSubviews(avatarImageView, usernameLabel)
         
         let padding: CGFloat = 8
-        
-        NSLayoutConstraint.activate([
-            avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
-            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-            avatarImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:  -padding),
-            
-            usernameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 12),
-            usernameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-            usernameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            usernameLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
+        avatarImageView.snp.makeConstraints { (make) in
+            make.height.equalTo(avatarImageView.snp.width)
+            make.top.equalTo(contentView.snp.top).offset(padding)
+            make.leading.equalTo(contentView.snp.leading).offset(padding)
+            make.trailing.equalTo(contentView.snp.trailing).inset(padding)
+        }
+        usernameLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(avatarImageView.snp.bottom).offset(12)
+            make.leading.equalTo(contentView.snp.leading).offset(padding)
+            make.trailing.equalTo(contentView.snp.trailing).inset(padding)
+            make.height.equalTo(20)
+        }
         
     }
     

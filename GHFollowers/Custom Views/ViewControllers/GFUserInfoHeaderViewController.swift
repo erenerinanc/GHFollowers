@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class GFUserInfoHeaderViewController: UIViewController {
     let avatarImageView         = GFAvatarImageView(frame: .zero)
@@ -37,44 +38,42 @@ class GFUserInfoHeaderViewController: UIViewController {
         view.addSubviews(avatarImageView, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel)
         let padding: CGFloat            = 20
         let textImagePadding: CGFloat   = 12
-        locationImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 90),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 90),
-            
-            
-            usernameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: textImagePadding),
-            usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            usernameLabel.heightAnchor.constraint(equalToConstant: 38),
-          
-            
-            nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 8),
-            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: textImagePadding),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            nameLabel.heightAnchor.constraint(equalToConstant: 20),
-            
-            
-            locationImageView.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor),
-            locationImageView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: textImagePadding),
-            locationImageView.widthAnchor.constraint(equalToConstant: 20),
-            locationImageView.heightAnchor.constraint(equalToConstant: 20),
-            
-            
-            locationLabel.centerYAnchor.constraint(equalTo: locationImageView.centerYAnchor),
-            locationLabel.leadingAnchor.constraint(equalTo: locationImageView.trailingAnchor, constant: 5),
-            locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            locationLabel.heightAnchor.constraint(equalToConstant: 20),
-            
-            
-            bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: textImagePadding),
-            bioLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            bioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bioLabel.heightAnchor.constraint(equalToConstant: 60)
-        ])
+        avatarImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.snp.top).offset(padding)
+            make.leading.equalTo(view.snp.leading)
+            make.width.equalTo(90)
+            make.height.equalTo(avatarImageView.snp.width)
+        }
+        usernameLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(avatarImageView.snp.top)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(textImagePadding)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalTo(38)
+        }
+        nameLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(avatarImageView.snp.centerY).offset(8)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(textImagePadding)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalTo(20)
+        }
+        locationImageView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(avatarImageView.snp.bottom)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(textImagePadding)
+            make.width.equalTo(20)
+            make.height.equalTo(locationImageView.snp.width)
+        }
+        locationLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(locationImageView.snp.centerY)
+            make.leading.equalTo(locationImageView.snp.trailing).offset(5)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalTo(20)
+        }
+        bioLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(avatarImageView.snp.bottom).offset(textImagePadding)
+            make.leading.equalTo(avatarImageView.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalTo(60)
+        }
     }
     
     private func configureUIElements() {
