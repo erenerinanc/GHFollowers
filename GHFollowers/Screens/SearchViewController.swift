@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class SearchViewController: UIViewController {
     
@@ -20,9 +21,8 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubviews(logoImageView, usernameTextField, callToActionButton)
-        configureLogoImageView()
-        configureTextField()
-        configureCallToActionButton()
+        layoutUI()
+    
         createDismissKeyboardTapGesture()
         
     }
@@ -48,41 +48,35 @@ class SearchViewController: UIViewController {
         navigationController?.pushViewController(followerListViewController, animated: true)
     }
     
-    func configureLogoImageView() {
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+    private func layoutUI() {
+        //MARK: -Configure LogoImageView
         logoImageView.image = Images.ghLogo
         
         let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
-        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant)
+        logoImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(topConstraintConstant)
+            make.centerX.equalTo(view.snp.centerX)
+            make.height.equalTo(200)
+            make.width.equalTo(200)
+        }
         
-        NSLayoutConstraint.activate([
-            logoImageViewTopConstraint,
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.heightAnchor.constraint(equalToConstant: 200),
-            logoImageView.widthAnchor.constraint(equalToConstant: 200)
-        ])
-    }
-    
-    func configureTextField() {
+        //MARK: -Configure TextField
         usernameTextField.delegate = self
+        usernameTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(logoImageView.snp.bottom).inset(-48)
+            make.leading.equalTo(view.snp.leading).inset(50)
+            make.trailing.equalTo(view.snp.trailing).inset(50)
+            make.height.equalTo(50)
+        }
         
-        NSLayoutConstraint.activate([
-            usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
-            usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            usernameTextField.heightAnchor.constraint(equalToConstant: 50),
-        ])
-    }
-    
-    func configureCallToActionButton() {
+        //MARK: -Configure CallToActionButton
         callToActionButton.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            callToActionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80),
-            callToActionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            callToActionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            callToActionButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        callToActionButton.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(-80)
+            make.leading.equalTo(view.snp.leading).inset(50)
+            make.trailing.equalTo(view.snp.trailing).inset(-50)
+            make.height.equalTo(50)
+        }
     }
 }
 
