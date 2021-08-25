@@ -14,14 +14,14 @@ protocol UserInfoViewControllerDelegate: class {
 
 class UserInfoViewController: GFDataLoadingViewController {
     
-    let scrollView  = UIScrollView()
+    let scrollView = UIScrollView()
     let contentView = UIView()
     
-    let headerView  = UIView()
+    let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
-    let dateLabel   = GFBodyLabel(textAlignment: .center)
-    var itemViews   = [UIView]()
+    let dateLabel = GFBodyLabel(textAlignment: .center)
+    var itemViews = [UIView]()
     
     var username: String!
     weak var delegate: UserInfoViewControllerDelegate!
@@ -45,13 +45,14 @@ class UserInfoViewController: GFDataLoadingViewController {
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
         
+        #warning("MAke it with SnapKit")
         scrollView.pinToEdges(to: view)
         contentView.pinToEdges(to: scrollView)
         
-        NSLayoutConstraint.activate([
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 2000)
-        ])
+        contentView.snp.makeConstraints { (make) in
+            make.width.equalTo(scrollView.snp.width)
+            make.height.equalTo(2000)
+        }
     }
     
     private func getUserInfo() {
@@ -84,7 +85,6 @@ class UserInfoViewController: GFDataLoadingViewController {
         let padding: CGFloat = 20
         
         for itemView in itemViews {
-            itemView.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(itemView)
             
             itemView.snp.makeConstraints { (make) in

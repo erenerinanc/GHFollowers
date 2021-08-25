@@ -57,7 +57,7 @@ class FollowersListViewController: GFDataLoadingViewController {
     }
     
     func configureViewController() {
-        view.backgroundColor                                   = .systemBackground
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -92,10 +92,10 @@ class FollowersListViewController: GFDataLoadingViewController {
     }
     
     func configureSearchController() {
-        let searchController                                  = UISearchController()
-        searchController.searchResultsUpdater                 = self
-        searchController.searchBar.placeholder                = "Search for a username"
-        navigationItem.searchController                       = searchController
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search for a username"
+        navigationItem.searchController = searchController
         searchController.obscuresBackgroundDuringPresentation = false
     }
     
@@ -144,15 +144,13 @@ class FollowersListViewController: GFDataLoadingViewController {
         snapshot.appendItems(followers)
         DispatchQueue.main.async { self.dataSource.apply(snapshot, animatingDifferences: true) }
     }
-
-    
 }
 
 extension FollowersListViewController: UICollectionViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let offsetY         = scrollView.contentOffset.y
-        let contentHeight   = scrollView.contentSize.height
-        let height          = scrollView.frame.size.height
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
         
         if offsetY > contentHeight - height {
             //that blocks user to make repeating network calls
@@ -164,13 +162,13 @@ extension FollowersListViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let activeArray                                = isSearching ? filteredFollowers : followers
-        let follower                                   = activeArray[indexPath.item]
+        let activeArray = isSearching ? filteredFollowers : followers
+        let follower = activeArray[indexPath.item]
         
-        let destinationViewController                  = UserInfoViewController()
-        destinationViewController.delegate             = self
-        destinationViewController.username             = follower.login
-        let navigationController                       = UINavigationController(rootViewController: destinationViewController)
+        let destinationViewController = UserInfoViewController()
+        destinationViewController.delegate = self
+        destinationViewController.username = follower.login
+        let navigationController = UINavigationController(rootViewController: destinationViewController)
         present(navigationController, animated: true)
     }
 }
@@ -194,9 +192,9 @@ extension FollowersListViewController: UISearchResultsUpdating {
 extension FollowersListViewController: UserInfoViewControllerDelegate {
     
     func didRequestFollowers(for username: String) {
-        self.username   = username
-        title           = username
-        page            = 1
+        self.username = username
+        title = username
+        page = 1
         followers.removeAll()
         filteredFollowers.removeAll()
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)

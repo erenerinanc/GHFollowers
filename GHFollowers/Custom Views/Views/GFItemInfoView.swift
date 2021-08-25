@@ -34,17 +34,18 @@ class GFItemInfoView: UIView {
         symbolImageView.contentMode = .scaleAspectFill
         symbolImageView.tintColor = .label
         
+        let padding: CGFloat = 12
         symbolImageView.snp.makeConstraints { (make) in
             make.top.equalTo(self.snp.top)
-            make.leading.equalTo(self.snp.leading)
+            make.leading.equalTo(self.snp.leading).inset(padding)
             make.height.equalTo(20)
             make.width.equalTo(20)
         }
         
         titleLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(symbolImageView.snp.centerY)
-            make.leading.equalTo(symbolImageView.snp.trailing).offset(12)
-            make.trailing.equalTo(self.snp.trailing)
+            make.leading.equalTo(symbolImageView.snp.trailing).offset(padding)
+            make.trailing.equalTo(self.snp.trailing).inset(padding)
             make.height.equalTo(18)
         }
         

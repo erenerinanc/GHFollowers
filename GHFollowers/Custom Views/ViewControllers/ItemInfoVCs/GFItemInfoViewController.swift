@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import SnapKit
 
 class GFItemInfoViewController: UIViewController {
-    let stackView       = UIStackView()
+    let stackView = UIStackView()
     let itemInfoViewOne = GFItemInfoView()
     let itemInfoViewTwo = GFItemInfoView()
-    let actionButton    = GFButton()
+    let actionButton = GFButton()
     
     var user: User!
     
@@ -32,7 +33,6 @@ class GFItemInfoViewController: UIViewController {
         configureStackView()
         layoutUI()
         configureActionButton()
-
     }
 
     private func configureBackgroundView() {
@@ -42,8 +42,8 @@ class GFItemInfoViewController: UIViewController {
     }
     
     private func configureStackView() {
-        stackView.axis          = .horizontal
-        stackView.distribution  = .equalSpacing
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
         stackView.addArrangedSubview(itemInfoViewOne)
         stackView.addArrangedSubview(itemInfoViewTwo)
     }
@@ -52,28 +52,24 @@ class GFItemInfoViewController: UIViewController {
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
     }
     
-    //this is our superclass, thats why we are not writing anything in here, we gonna override it in our subclasses
     @objc func actionButtonTapped() {}
     
     private func layoutUI() {
         view.addSubviews(stackView, actionButton)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let padding: CGFloat            = 20
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            stackView.heightAnchor.constraint(equalToConstant: 50),
-            
-            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
-            actionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            actionButton.heightAnchor.constraint(equalToConstant: 44)
-            
-        ])
+        let padding: CGFloat = 20
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top).inset(padding)
+            make.leading.equalTo(view.snp.leading).inset(padding)
+            make.trailing.equalTo(view.snp.trailing).offset(padding)
+            make.height.equalTo(50)
+        }
+        
+        actionButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.snp.bottom).inset(padding)
+            make.leading.equalTo(view.snp.leading).inset(padding)
+            make.trailing.equalTo(view.snp.trailing).inset(padding)
+            make.height.equalTo(44)
+        }
     }
-
-
-
 }

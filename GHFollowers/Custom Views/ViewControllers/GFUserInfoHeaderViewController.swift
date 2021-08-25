@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 
 class GFUserInfoHeaderViewController: UIViewController {
-    let avatarImageView         = GFAvatarImageView(frame: .zero)
-    let usernameLabel           = GFTitleLabel(textAlignment: .left, fontSize: 34)
-    let nameLabel               = GFSecondaryTitleLabel(fontSize: 18)
-    let locationImageView       = UIImageView()
-    let locationLabel           = GFSecondaryTitleLabel(fontSize: 18)
-    let bioLabel                = GFBodyLabel(textAlignment: .left)
+    let avatarImageView = GFAvatarImageView(frame: .zero)
+    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
+    let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
+    let locationImageView = UIImageView()
+    let locationLabel = GFSecondaryTitleLabel(fontSize: 18)
+    let bioLabel = GFBodyLabel(textAlignment: .left)
     
     var user: User!
     
@@ -36,39 +36,40 @@ class GFUserInfoHeaderViewController: UIViewController {
     
     private func layoutUI() {
         view.addSubviews(avatarImageView, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel)
-        let padding: CGFloat            = 20
-        let textImagePadding: CGFloat   = 12
-        avatarImageView.snp.makeConstraints { (make) in
+        
+        let padding: CGFloat = 20
+        let textImagePadding: CGFloat = 12
+        avatarImageView.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top).offset(padding)
             make.leading.equalTo(view.snp.leading)
             make.width.equalTo(90)
             make.height.equalTo(avatarImageView.snp.width)
         }
-        usernameLabel.snp.makeConstraints { (make) in
+        usernameLabel.snp.makeConstraints { make in
             make.top.equalTo(avatarImageView.snp.top)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(textImagePadding)
             make.trailing.equalTo(view.snp.trailing)
             make.height.equalTo(38)
         }
-        nameLabel.snp.makeConstraints { (make) in
+        nameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(avatarImageView.snp.centerY).offset(8)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(textImagePadding)
             make.trailing.equalTo(view.snp.trailing)
             make.height.equalTo(20)
         }
-        locationImageView.snp.makeConstraints { (make) in
+        locationImageView.snp.makeConstraints { make in
             make.bottom.equalTo(avatarImageView.snp.bottom)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(textImagePadding)
             make.width.equalTo(20)
             make.height.equalTo(locationImageView.snp.width)
         }
-        locationLabel.snp.makeConstraints { (make) in
+        locationLabel.snp.makeConstraints { make in
             make.centerY.equalTo(locationImageView.snp.centerY)
             make.leading.equalTo(locationImageView.snp.trailing).offset(5)
             make.trailing.equalTo(view.snp.trailing)
             make.height.equalTo(20)
         }
-        bioLabel.snp.makeConstraints { (make) in
+        bioLabel.snp.makeConstraints { make in
             make.top.equalTo(avatarImageView.snp.bottom).offset(textImagePadding)
             make.leading.equalTo(avatarImageView.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
@@ -78,12 +79,12 @@ class GFUserInfoHeaderViewController: UIViewController {
     
     private func configureUIElements() {
         downloadAvatarImage()
-        usernameLabel.text          = user.login
-        nameLabel.text              = user.name ?? ""
-        locationImageView.image     = SFSymbols.location
-        locationLabel.text          = user.location ?? "No Location"
-        bioLabel.text               = user.bio
-        bioLabel.numberOfLines      = 3
+        usernameLabel.text = user.login
+        nameLabel.text = user.name ?? ""
+        locationImageView.image = SFSymbols.location
+        locationLabel.text = user.location ?? "No Location"
+        bioLabel.text = user.bio
+        bioLabel.numberOfLines = 3
         locationImageView.tintColor = .secondaryLabel
         
     }

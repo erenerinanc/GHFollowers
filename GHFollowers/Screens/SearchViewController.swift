@@ -10,9 +10,9 @@ import SnapKit
 
 class SearchViewController: UIViewController {
     
-    let logoImageView       = UIImageView()
-    let usernameTextField   = GFTextField()
-    let callToActionButton  = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
+    let logoImageView = UIImageView()
+    let usernameTextField = GFTextField()
+    let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
     var logoImageViewTopConstraint: NSLayoutConstraint!
 
     var isUserNameEntered: Bool { return !usernameTextField.text!.isEmpty }
@@ -22,9 +22,7 @@ class SearchViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubviews(logoImageView, usernameTextField, callToActionButton)
         layoutUI()
-    
         createDismissKeyboardTapGesture()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,7 +42,7 @@ class SearchViewController: UIViewController {
             return
         }
         
-        let followerListViewController            = FollowersListViewController(username: usernameTextField.text!)
+        let followerListViewController = FollowersListViewController(username: usernameTextField.text!)
         navigationController?.pushViewController(followerListViewController, animated: true)
     }
     
